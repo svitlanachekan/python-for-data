@@ -1,4 +1,6 @@
-import pandas as pd
+import pandas as pd # 13.11.2025
+import matplotlib.pyplot as plt # 14.11.2025
+import seaborn as sns
 
 url = "data/movies_metadata.csv"
 
@@ -34,3 +36,29 @@ df.info()
 df.dropna(inplace=True)
 print(df.isnull().sum())
 df.info()
+
+
+# ---------#---------
+# 14.11.2025
+
+# print(df.head()) # повертає
+# print(df.genres)
+
+
+genres_counts = df['genres'].value_counts() # окремо виводимо жари, рахує, строврила змінну, звертаюся до жанрів, хочу , чтоб поархувала скілько жанрів є: порахувати значення і вивести змінну
+# print(genres_counts)
+
+# print(genres_counts.index)  # окремо виношу елементи, що там є, щоб врахувати до графіка , додаємо принт , індекс, і передаємо по іксу ,а занчення передам по ігреку
+# print(genres_counts.values)
+
+plt.figure(figsize=(10,6))  # 2D міціе для графіка, розмір задаємо, 1-0 на 6 одиниц = розмір вконечка, в цьому віконечку, будемо наповнювати, шоу повинно бути остсннім = допомогає сторити додаткове вікно
+
+plt.title("Count film for genres")
+plt.ylabel("genres")
+plt.ylabel("counts")
+
+plt.xticks(rotation=45) #  розміщення індескоів = перевертаємо графік під кутом
+
+
+sns.barplot(x=genres_counts.index, y=genres_counts.values) # будуємо графік, будує залежніть, по іксу = найменнування. і по ігреку - значення = кількість
+plt.show()
