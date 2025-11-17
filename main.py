@@ -1,25 +1,27 @@
-import pandas as pd # 13.11.2025
-import matplotlib.pyplot as plt # 14.11.2025
-import seaborn as sns
-import ast
+import pandas as pd # 13.11.2025 імпортує бібліотеку pandas і дає їй коротке ім’я pd
+import matplotlib.pyplot as plt # 14.11.2025 Імпортується модуль pyplot з бібліотеки matplotlib, який дозволяє створювати графіки.
+import seaborn as sns # Це імпорт бібліотеки seaborn, яку будують поверх matplotlib (красивішими,більш інформативними, простішими в побудові)
+import ast # Імпортується модуль ast (Abstract Syntax Trees). Перетворює текст, що виглядає як Python-структура (список, словник), у справжню структуру Python.
 
-url = "data/movies_metadata.csv"
 
-df = pd.read_csv(url) # df = DataFrame
+url = "data/movies_metadata.csv" # Цей рядок зберігає шлях до файлу у змінну url. У даному випадку "data/movies_metadata.csv" — це відносний шлях до CSV-файлу, який знаходиться у папці data.
 
-# print(df.head()) #
-# df.info() # виводить інфо без print
-# print(df.describe()) #
-# print(df.isnull().sum()) #
+df = pd.read_csv(url) # df = DataFrame # використовує бібліотеку pandas (скорочено pd); читає CSV-файл за шляхом, який зберігається в url; завантажує дані у змінну df.
 
-print(df[["belongs_to_collection", "homepage", "tagline"]])
+# print(df.head()) # Показує перші 5 рядків DataFrame
+# df.info() # виводить інфо без print # Показує структуру датафрейму: кількість рядків і стовпців, назви колонок, типи даних (int, float, object…),скільки непорожніх значень у кожній колонці. Це допомагає: побачити, де є пропуски, зрозуміти, які типи треба конвертувати.
+# print(df.describe()) # статистичний опис числових колонок: count — скільки значень, mean — середнє значення, std — стандартне відхилення,min, max, Це допомагає: побачити розмахи даних, оцінити аномалії, визначити, чи є надмалі або дуже великі значення.percentiles (25%, 50%, 75%)
+# print(df.isnull().sum()) # Показує кількість пропущених значень у кожній колонці. Це корисно для: пошуку проблемних колонок, вирішення, що робити: заповнювати, видаляти чи залишати пропуски.
+
+print(df[["belongs_to_collection", "homepage", "tagline"]]) # виводить на екран лише три вибрані колонки з DataFrame df: belongs_to_collection, homepage, tagline. Gередаємо список з трьох елементів
 
 # print(df.tagline)
 # старий варіант
 # df["tagline"].fillna("without tagline", inplace=True) #заповнює пропуски 
 
-# Нова альтернатива старому варіантові - НЕ ДОПИСАНО
-df["tagline"] = df["tagline"].fillna("without tagline")
+# Нова альтернатива старому варіантові
+# df.fillna({"tagline": "without tagline"}, inplace=True) # Метод fillna() дозволяє замінити пропуски (NaN) у всьому DataFrame або в окремих колонках, тобто у колонці tagline → замінити NaN на "without tagline", інші колонки не змінюються. inplace=True означає змінити DataFrame без створення копії.
+df["tagline"] = df["tagline"].fillna("without tagline") # замінює всі пропущені значення (NaN) у колонці tagline на текст "without tagline". Використовують для щоб не мати порожніх значень у колонці; щоб уникнути помилок під час аналізу чи візуалізації; щоб текстова колонка мала однаковий формат; щоб пізніше було легко відфільтрувати фільми без слогану.
 
 print(df.tagline)
 
